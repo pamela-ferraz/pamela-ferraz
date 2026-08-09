@@ -1,0 +1,422 @@
+/* ==================================================================
+   PAMELA FERRAZ — LANDING PAGE
+   Sistema de design
+
+   Paleta (proposital, fugindo do combo padrão "creme + terracota"):
+   --ink-950     #201A1C  tinta quase-preta, base de aterramento
+   --ink-800     #34262B  cartões / superfícies sobre o fundo escuro
+   --parchment   #F1E9DE  pergaminho quente, seções claras
+   --rose-500    #C98A93  rosa empoeirado — cor de destaque primária
+   --rose-700    #8C4A56  rosa profundo — hover, bordas, ênfase
+   --gold-400    #C6A15B  dourado antigo — linha-assinatura, detalhes
+
+   Tipografia:
+   Display: "Fraunces" (serifada editorial, itálico ótico)
+   Corpo/utilitária: "Work Sans"
+   ================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  /* cor */
+  --ink-950: #201A1C;
+  --ink-800: #34262B;
+  --ink-700: #4A363D;
+  --parchment: #F1E9DE;
+  --parchment-dim: #E7DCCC;
+  --rose-500: #C98A93;
+  --rose-600: #B36E79;
+  --rose-700: #8C4A56;
+  --gold-400: #C6A15B;
+  --gold-300: #D8BC85;
+  --paper: #FBF8F4;
+
+  /* tipografia */
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body: "Work Sans", "Segoe UI", system-ui, sans-serif;
+
+  --fs-900: clamp(2.3rem, 1.6rem + 3.2vw, 4.4rem);
+  --fs-700: clamp(1.5rem, 1.2rem + 1.3vw, 2.4rem);
+  --fs-500: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+  --fs-300: clamp(0.85rem, 0.8rem + 0.15vw, 0.95rem);
+
+  /* layout */
+  --wrap: min(72rem, 100% - 2.5rem);
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 28px;
+  --header-h: 4.5rem;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 48rem) {
+  :root { --wrap: min(72rem, 100% - 4rem); }
+}
+
+/* ------------------------------------------------------------------
+   Reset enxuto
+------------------------------------------------------------------ */
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 1rem); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--fs-500);
+  line-height: 1.6;
+  color: var(--ink-950);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+ul { list-style: none; margin: 0; padding: 0; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.12; margin: 0 0 0.6em; }
+p { margin: 0 0 1em; }
+
+:focus-visible {
+  outline: 2px solid var(--gold-400);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.wrap { width: var(--wrap); margin-inline: auto; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: fixed; top: -6rem; left: 1rem; z-index: 200;
+  background: var(--ink-950); color: var(--paper);
+  padding: 0.75rem 1.25rem; border-radius: var(--radius-sm);
+  transition: top 0.2s var(--ease);
+}
+.skip-link:focus { top: 1rem; }
+
+/* ------------------------------------------------------------------
+   Botões
+------------------------------------------------------------------ */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  transition: transform 0.25s var(--ease), background-color 0.25s var(--ease), color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  white-space: nowrap;
+}
+.btn-icon { transition: transform 0.25s var(--ease); }
+.btn:hover .btn-icon { transform: translateX(3px); }
+
+.btn-primary {
+  background: var(--rose-700); color: var(--paper);
+  box-shadow: 0 6px 20px -8px rgba(140, 74, 86, 0.6);
+}
+.btn-primary:hover { background: var(--ink-950); transform: translateY(-2px); }
+
+.btn-outline {
+  background: transparent; color: var(--parchment);
+  border: 1.5px solid var(--gold-400);
+}
+.btn-outline:hover { background: var(--gold-400); color: var(--ink-950); transform: translateY(-2px); }
+
+.btn-ghost { background: transparent; color: var(--ink-950); border: 1.5px solid var(--ink-950); }
+.btn-ghost:hover { background: var(--ink-950); color: var(--paper); transform: translateY(-2px); }
+
+/* ------------------------------------------------------------------
+   Cabeçalho / navegação
+------------------------------------------------------------------ */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 1px solid rgba(32, 26, 28, 0.08);
+}
+
+/* O desfoque fica num pseudo-elemento, não no .site-header em si.
+   backdrop-filter/transform/filter num ancestral cria um novo
+   "containing block" para descendentes position:fixed — se ficasse
+   direto no .site-header, o painel do menu (.site-nav, que é fixed e
+   mora dentro do header) ficaria preso à altura do header em vez de
+   cobrir a tela toda. Isolar o blur aqui evita esse efeito colateral. */
+.site-header::before {
+  content: "";
+  position: absolute; top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(251, 248, 244, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: -1;
+}
+
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: var(--header-h);
+  gap: 1rem;
+}
+
+.brand { display: inline-flex; align-items: center; gap: 0.55rem; color: var(--ink-950); }
+.brand-mark { color: var(--rose-700); display: inline-flex; }
+.brand-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; letter-spacing: 0.01em; }
+
+.nav-toggle {
+  display: inline-flex; flex-direction: column; justify-content: center; gap: 5px;
+  width: 2.75rem; height: 2.75rem;
+  padding: 0.6rem;
+  border-radius: var(--radius-sm);
+  z-index: 110;
+}
+.nav-toggle-bar {
+  display: block; height: 2px; width: 100%;
+  background: var(--ink-950);
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.site-nav {
+  position: fixed;
+  top: var(--header-h); right: 0; bottom: 0; left: 0;
+  background: var(--paper);
+  padding: 2rem 1.5rem 2.5rem;
+  display: flex; flex-direction: column; gap: 2rem;
+  transform: translateX(100%);
+  transition: transform 0.35s var(--ease);
+  overflow-y: auto;
+  box-shadow: -12px 0 32px -16px rgba(32, 26, 28, 0.25);
+}
+
+@media (min-width: 30rem) {
+  .site-nav { padding-inline: 2.5rem; }
+}
+.site-nav.is-open { transform: translateX(0); }
+
+.nav-list { display: flex; flex-direction: column; gap: 1.5rem; font-size: 1.15rem; font-weight: 500; }
+.nav-list a { display: inline-block; padding: 0.15rem 0; }
+.nav-list a[aria-current="true"] { color: var(--rose-700); }
+
+.nav-more { border-top: 1px solid rgba(32,26,28,0.1); padding-top: 1.25rem; }
+.nav-more summary {
+  cursor: pointer; list-style: none; font-weight: 500;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.nav-more summary::-webkit-details-marker { display: none; }
+.nav-more summary::after { content: "▾"; font-size: 0.75em; color: var(--rose-700); }
+.nav-more[open] summary::after { content: "▴"; }
+.nav-more ul { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.9rem; padding-left: 0.25rem; font-size: 1rem; color: var(--ink-700); }
+
+.nav-cta { align-self: flex-start; }
+
+@media (min-width: 64rem) {
+  .nav-toggle { display: none; }
+  .site-nav {
+    position: static; transform: none;
+    flex-direction: row; align-items: center; justify-content: flex-end;
+    padding: 0; gap: 2rem; overflow: visible; background: transparent;
+    flex: 1;
+  }
+  .nav-list { flex-direction: row; align-items: center; gap: 1.85rem; font-size: 0.98rem; }
+  .nav-more { border-top: 0; padding-top: 0; position: relative; }
+  .nav-more ul {
+    position: absolute; top: calc(100% + 0.85rem); right: 0;
+    background: var(--ink-950); color: var(--parchment);
+    padding: 1rem 1.25rem; border-radius: var(--radius-sm);
+    min-width: 12rem; box-shadow: 0 20px 40px -20px rgba(0,0,0,0.4);
+  }
+  .nav-cta { align-self: center; }
+}
+
+/* ------------------------------------------------------------------
+   Hero
+------------------------------------------------------------------ */
+.hero { position: relative; background: var(--paper); overflow: hidden; }
+
+.hero-grid {
+  padding-block: 3.5rem 4rem;
+  display: grid; gap: 2.5rem;
+}
+
+.eyebrow {
+  font-family: var(--font-body); font-size: var(--fs-300);
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--rose-700); margin-bottom: 0.9rem;
+}
+.eyebrow--light { color: var(--gold-400); }
+
+.hero-copy h1 { font-size: var(--fs-900); color: var(--ink-950); }
+.hero-copy h1 em { font-style: italic; color: var(--rose-700); }
+
+.hero-lede { font-size: var(--fs-500); max-width: 38ch; color: var(--ink-700); }
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem; }
+
+.hero-media { position: relative; justify-self: center; width: min(22rem, 100%); }
+.hero-media-tag {
+  position: absolute; bottom: -0.9rem; left: 50%; transform: translateX(-50%);
+  background: var(--ink-950); color: var(--parchment);
+  font-size: 0.75rem; letter-spacing: 0.04em;
+  padding: 0.45rem 0.9rem; border-radius: 999px;
+  white-space: nowrap;
+}
+
+@media (min-width: 64rem) {
+  .hero-grid { grid-template-columns: 1.1fr 0.9fr; align-items: center; padding-block: 5rem 6rem; }
+  .hero-media { justify-self: end; width: 100%; }
+}
+
+/* Divisor "rachadura" — elemento de assinatura da página */
+.crack-divider { width: 100%; line-height: 0; opacity: 0; transform: translateY(6px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.crack-divider.is-visible { opacity: 1; transform: translateY(0); }
+.crack-divider svg { width: 100%; height: 2.25rem; }
+
+/* ------------------------------------------------------------------
+   Molduras de imagem / placeholders
+------------------------------------------------------------------ */
+.image-frame {
+  margin: 0; overflow: hidden; border-radius: var(--radius-lg);
+  background: var(--parchment-dim);
+  border: 1px solid rgba(32,26,28,0.08);
+  position: relative;
+}
+.image-frame img { width: 100%; height: 100%; object-fit: cover; }
+.image-frame--portrait { aspect-ratio: 4 / 5; }
+.image-frame--square { aspect-ratio: 1 / 1; border-radius: var(--radius-md); }
+.image-frame--tall { aspect-ratio: 3 / 4; }
+
+/* ------------------------------------------------------------------
+   Seções — genérico
+------------------------------------------------------------------ */
+.section { padding-block: 4.5rem; }
+.section--dark { background: var(--ink-950); color: var(--parchment); }
+.section--dark h2, .section--dark h3 { color: var(--parchment); }
+.section--parchment { background: var(--parchment); }
+
+.section h2 { font-size: var(--fs-700); max-width: 26ch; }
+.section-lede { font-size: var(--fs-500); max-width: 48ch; color: var(--ink-700); }
+.section--dark .section-lede { color: var(--rose-500); }
+
+/* Lista de padrões (dores) */
+.pattern-list {
+  display: grid; gap: 1rem;
+  margin-block: 2.25rem 2.5rem;
+}
+@media (min-width: 48rem) {
+  .pattern-list { grid-template-columns: 1fr 1fr; column-gap: 2.5rem; }
+}
+.pattern-list li {
+  display: flex; gap: 0.75rem; align-items: flex-start;
+  padding-block: 0.85rem;
+  border-bottom: 1px solid rgba(241, 233, 222, 0.14);
+  font-size: 1.02rem;
+}
+.pattern-mark { color: var(--gold-400); font-weight: 600; flex-shrink: 0; }
+
+/* Duas colunas */
+.two-col { display: grid; gap: 3rem; align-items: start; }
+@media (min-width: 64rem) {
+  .two-col { grid-template-columns: 1fr 1fr; gap: 4.5rem; }
+  .two-col--reverse .two-col-text { order: 2; }
+  .two-col--reverse .two-col-media { order: 1; }
+}
+.two-col-text h2 { font-size: var(--fs-700); }
+.list-heading { font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; margin-bottom: 1.1rem; }
+
+.check-list { display: flex; flex-direction: column; gap: 0.9rem; }
+.check-list li {
+  position: relative; padding-left: 1.75rem; font-size: 1.02rem;
+}
+.check-list li::before {
+  content: ""; position: absolute; left: 0; top: 0.45em;
+  width: 0.9rem; height: 0.9rem; border-radius: 50%;
+  border: 1.5px solid var(--rose-700);
+  background: radial-gradient(circle, var(--rose-500) 0 30%, transparent 32%);
+}
+
+/* Depoimentos */
+.testimonial-grid {
+  display: grid; gap: 1.25rem;
+  margin-block: 2.25rem 2.5rem;
+}
+@media (min-width: 40rem) {
+  .testimonial-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Para quem é / não é */
+.fit-grid { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
+@media (min-width: 48rem) { .fit-grid { grid-template-columns: 1fr 1fr; } }
+
+.fit-card {
+  padding: 2rem; border-radius: var(--radius-md);
+  background: var(--ink-800);
+}
+.fit-card h3 { font-size: 1.2rem; margin-bottom: 1.25rem; }
+.fit-card ul { display: flex; flex-direction: column; gap: 0.9rem; }
+.fit-card li { position: relative; padding-left: 1.6rem; font-size: 0.98rem; color: var(--parchment); opacity: 0.92; }
+.fit-card--yes li::before { content: "✓"; position: absolute; left: 0; color: var(--gold-400); font-weight: 700; }
+.fit-card--no li::before { content: "✕"; position: absolute; left: 0; color: var(--rose-500); font-weight: 700; }
+
+/* ------------------------------------------------------------------
+   Formulário de contato
+------------------------------------------------------------------ */
+.contact-wrap { max-width: 34rem; }
+.contact-form { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.35rem; }
+.form-row { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-row label { font-weight: 600; font-size: 0.92rem; }
+.optional { font-weight: 400; color: var(--ink-700); }
+
+.form-row input,
+.form-row textarea {
+  font: inherit; padding: 0.85rem 1rem;
+  border: 1.5px solid rgba(32,26,28,0.18);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  resize: vertical;
+}
+.form-row input:invalid[aria-invalid="true"],
+.form-row textarea:invalid[aria-invalid="true"] { border-color: var(--rose-700); }
+
+.field-error { font-size: 0.82rem; color: var(--rose-700); min-height: 1.1em; }
+
+/* Honeypot: escondido visualmente, mas presente no DOM/tab flow controlado
+   via tabindex="-1" no HTML — não usar display:none (alguns leitores de
+   tela e extensões de autofill ignoram esse padrão de forma inconsistente,
+   então reforçamos com posição fora da tela). */
+.form-row--honeypot {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  left: -9999px;
+}
+
+.contact-form .btn { align-self: flex-start; }
+.form-status { font-size: 0.92rem; min-height: 1.2em; color: var(--rose-700); }
+.form-status.is-success { color: #3E6B4F; }
+
+/* ------------------------------------------------------------------
+   Rodapé
+------------------------------------------------------------------ */
+.site-footer { background: var(--ink-950); color: var(--parchment); padding-block: 3.5rem 1.75rem; }
+.footer-inner {
+  display: grid; gap: 2.5rem;
+  padding-bottom: 2.5rem; margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(241,233,222,0.14);
+}
+@media (min-width: 48rem) {
+  .footer-inner { grid-template-columns: 1.2fr 1fr 1fr; }
+}
+.footer-brand p { color: var(--rose-500); margin-top: 0.4rem; font-size: 0.92rem; }
+.footer-nav-title, .social-list > li:first-child { font-weight: 600; }
+.footer-nav-title { margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold-400); }
+.footer-nav ul, .social-list { display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.95rem; }
+.footer-nav a:hover, .social-list a:hover { color: var(--gold-400); }
+.footer-legal { text-align: center; font-size: 0.82rem; color: rgba(241,233,222,0.6); }
+
+/* ------------------------------------------------------------------
+   Revelação suave ao rolar (aplicada via JS a [data-reveal])
+------------------------------------------------------------------ */
+[data-reveal] { opacity: 0; transform: translateY(16px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+[data-reveal].is-visible { opacity: 1; transform: translateY(0); }

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- ============================================================
+       SEGURANÇA
+       - CSP restringe origens de scripts/estilos/imagens/fontes.
+       - Ajuste 'self' e domínios conforme onde a página for hospedada.
+       - Se adicionar um backend para o formulário, inclua o domínio
+         dele em connect-src / form-action.
+  ============================================================ -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 base-uri 'self';
+                 form-action 'self';
+                 frame-ancestors 'none';
+                 object-src 'none';
+                 img-src 'self' data:;
+                 font-src 'self' https://fonts.gstatic.com;
+                 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+                 script-src 'self';
+                 upgrade-insecure-requests;">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index, follow">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#201A1C">
+
+  <title>Pamela Ferraz — Volte para quem você é</title>
+  <meta name="description" content="Um processo de 12 semanas para quebrar padrões inconscientes, reconectar com sua verdade e criar uma vida que realmente parece sua.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pamela Ferraz">
+  <meta property="og:title" content="Pamela Ferraz — Volte para quem você é">
+  <meta property="og:description" content="Um processo de 12 semanas para quebrar padrões inconscientes, reconectar com sua verdade e criar uma vida que realmente parece sua.">
+  <meta property="og:image" content="assets/social-card.jpg">
+  <meta property="og:locale" content="pt_BR">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:,">
+  <link rel="canonical" href="https://exemplo.com/">
+
+  <!-- Fontes: Fraunces (display editorial, quebra o clichê serif+terracota
+       usando peso e itálico óptico) + Work Sans (corpo humanista, neutro) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Link de acesso rápido para leitores de tela / navegação por teclado -->
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo principal</a>
+
+  <!-- ============================================================
+       CABEÇALHO / NAVEGAÇÃO
+       Contém links para outras landing pages (placeholders — troque
+       os href="#" pelas URLs reais de cada página quando existirem).
+  ============================================================ -->
+  <header class="site-header" id="topo">
+    <div class="wrap header-inner">
+
+      <a class="brand" href="#topo" aria-label="Pamela Ferraz — página inicial">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="30" height="30" focusable="false">
+            <path d="M16 2 L16 30 M4 10 Q16 2 28 10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="brand-name">Pamela&nbsp;Ferraz</span>
+      </a>
+
+      <button type="button"
+              class="nav-toggle"
+              id="navToggle"
+              aria-expanded="false"
+              aria-controls="siteNav"
+              aria-label="Abrir menu de navegação">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <nav class="site-nav" id="siteNav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#jornada">A jornada</a></li>
+          <li><a href="#depoimentos">Depoimentos</a></li>
+          <li><a href="#metodo">Método</a></li>
+          <li><a href="#contato">Contato</a></li>
+
+          <!-- Placeholders para as demais landing pages do site.
+               Substitua os href="#" pelas URLs reais. -->
+          <li class="nav-item-more">
+            <details class="nav-more">
+              <summary>Outras páginas</summary>
+              <ul>
+                <li><a href="#" data-placeholder="true">Sobre mim</a></li>
+                <li><a href="#" data-placeholder="true">Programa Individual</a></li>
+                <li><a href="#" data-placeholder="true">Blog / Reflexões</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+        <a class="btn btn-primary nav-cta" href="#contato">Trabalhe comigo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo-principal">
+
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
+    <section class="hero" id="inicio" aria-labelledby="hero-heading">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Pare de se esconder atrás de máscaras</p>
+          <h1 id="hero-heading">
+            Eu te ajudo a lembrar quem você é <em>e</em> a criar uma vida que finalmente parece sua.
+          </h1>
+          <p class="hero-lede">
+            Eu te ajudo a se lembrar de quem você é e a criar uma vida que realmente pareça sua.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#jornada">
+              Começar minha jornada
+              <svg class="btn-icon" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true" focusable="false">
+                <path d="M4 10h12M11 5l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="btn btn-ghost" href="#metodo">Como funciona</a>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <!-- ============================================================
+               IMAGEM DA HERO
+               Troque o src abaixo pela sua foto (recomendado: retrato
+               vertical, proporção 4:5, mínimo 900×1125px).
+               O placeholder atual é gerado localmente (sem rede externa).
+          ============================================================ -->
+          <figure class="image-frame image-frame--portrait">
+            <img
+              src="assets/placeholder-hero.svg"
+              alt="Substitua por uma foto sua em tom acolhedor e presente"
+              width="900" height="1125"
+              loading="eager"
+              decoding="async">
+            <figcaption class="visually-hidden">Espaço reservado para foto principal</figcaption>
+          </figure>
+          <span class="hero-media-tag">Adicione sua imagem aqui</span>
+        </div>
+      </div>
+
+      <div class="crack-divider" aria-hidden="true" data-reveal>
+        <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+          <path d="M0 20 L180 20 L210 8 L245 32 L270 20 L1200 20" fill="none" stroke="url(#crackGrad)" stroke-width="1.5"/>
+          <defs>
+            <linearGradient id="crackGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#C6A15B" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#C6A15B" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#C6A15B" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PADRÕES / DORES
+    ============================================================ -->
+    <section class="section section--dark" aria-labelledby="padroes-heading">
+      <div class="wrap">
+        <p class="eyebrow eyebrow--light">Você sabe que existe um fogo dentro de você 🔥</p>
+        <h2 id="padroes-heading">Mas, de algum jeito...</h2>
+
+        <ul class="pattern-list">
+          <li><span class="pattern-mark" aria-hidden="true">→</span>Você desconfia das próprias decisões e busca aprovação antes de agir</li>
+          <li><span class="pattern-mark" aria-hidden="true">→</span>Você se sente desconectada de quem realmente é e do que quer</li>
+          <li><span class="pattern-mark" aria-hidden="true">→</span>Você tenta ser a versão de si mesma que os outros esperam</li>
+          <li><span class="pattern-mark" aria-hidden="true">→</span>Você não se sente segura sendo vista por completo</li>
+          <li><span class="pattern-mark" aria-hidden="true">→</span>Você se importa demais com o que as pessoas vão pensar</li>
+          <li><span class="pattern-mark" aria-hidden="true">→</span>Você passa mais tempo na cabeça do que no corpo</li>
+          <li><span class="pattern-mark" aria-hidden="true">→</span>Você perdeu contato com sua alegria, sua espontaneidade, seu propósito</li>
+          <li><span class="pattern-mark" aria-hidden="true">→</span>Você está cansada de viver segundo regras e padrões que não são seus</li>
+        </ul>
+
+        <a class="btn btn-outline" href="#jornada">Voltar para mim mesma</a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         A JORNADA / TRANSFORMAÇÃO
+    ============================================================ -->
+    <section class="section" id="jornada" aria-labelledby="jornada-heading">
+      <div class="wrap two-col">
+        <div class="two-col-text">
+          <h2 id="jornada-heading">
+            Você não nasceu duvidando de si mesma. Isso foi aprendido — e o que se aprende, também se desaprende.
+          </h2>
+          <p>
+            Você já sabe mais do que imagina. Não precisa de mais uma resposta pronta,
+            mais um curso ou mais um livro. Precisa é começar a se escutar de verdade.
+          </p>
+          <p>
+            O trabalho agora é soltar as ilusões que você tem carregado — condicionamentos,
+            medos, histórias antigas — e voltar a ocupar o espaço de quem você sempre foi.
+          </p>
+        </div>
+
+        <div class="two-col-list">
+          <h3 class="list-heading">Ao longo das 12 semanas juntas, você vai:</h3>
+          <ul class="check-list">
+            <li>Reconhecer onde tem se abandonado</li>
+            <li>Identificar as vozes externas que decidem por você</li>
+            <li>Ouvir sua voz interna acima da opinião alheia</li>
+            <li>Ganhar clareza sobre seus valores e viver a partir deles</li>
+            <li>Reconectar com seus desejos mais genuínos</li>
+            <li>Se sentir mais livre para dizer sua verdade</li>
+            <li>Ter clareza sobre a vida que quer construir</li>
+            <li>Agir a partir de convicção — não de medo</li>
+            <li>Confiar nas próprias decisões, sem precisar de validação</li>
+            <li>Fortalecer sua intuição como bússola principal</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         DEPOIMENTOS
+    ============================================================ -->
+    <section class="section section--parchment" id="depoimentos" aria-labelledby="depoimentos-heading">
+      <div class="wrap">
+        <p class="eyebrow">Palavras de quem viveu essa jornada</p>
+        <h2 id="depoimentos-heading">Depoimentos</h2>
+
+        <div class="testimonial-grid">
+          <!-- ============================================================
+               DEPOIMENTOS — cada figura é um espaço para print/foto de
+               depoimento. Troque o src pela sua imagem (proporção 1:1,
+               mínimo 600×600px) e ajuste o alt com o nome/resumo real.
+          ============================================================ -->
+          <figure class="image-frame image-frame--square">
+            <img src="assets/placeholder-square.svg" alt="Espaço para depoimento em imagem 1" width="600" height="600" loading="lazy" decoding="async">
+          </figure>
+          <figure class="image-frame image-frame--square">
+            <img src="assets/placeholder-square.svg" alt="Espaço para depoimento em imagem 2" width="600" height="600" loading="lazy" decoding="async">
+          </figure>
+          <figure class="image-frame image-frame--square">
+            <img src="assets/placeholder-square.svg" alt="Espaço para depoimento em imagem 3" width="600" height="600" loading="lazy" decoding="async">
+          </figure>
+        </div>
+
+        <a class="btn btn-primary" href="#contato">Trabalhe comigo</a>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         PARA QUEM É / NÃO É
+    ============================================================ -->
+    <section class="section section--dark" aria-labelledby="fit-heading">
+      <div class="wrap">
+        <h2 id="fit-heading">Pronta para parar de duvidar de si mesma?</h2>
+        <p class="section-lede">Você pode ser uma boa combinação para essa jornada se...</p>
+
+        <div class="fit-grid">
+          <div class="fit-card fit-card--yes">
+            <h3>Esse caminho é para você se...</h3>
+            <ul>
+              <li>Está cansada de performar quem você não é</li>
+              <li>Quer confiar na própria voz, não na opinião dos outros</li>
+              <li>Quer parar de se encolher para caber</li>
+              <li>Está pronta para decidir a partir da própria verdade</li>
+              <li>Quer se escolher, sem culpa</li>
+            </ul>
+          </div>
+
+          <div class="fit-card fit-card--no">
+            <h3>Isso não é para você se...</h3>
+            <ul>
+              <li>Ainda prefere culpar circunstâncias externas pelos resultados</li>
+              <li>Busca soluções mágicas, sem se envolver no processo</li>
+              <li>Não pode se comprometer a aparecer durante as 12 semanas</li>
+              <li>Não está aberta a explorar corpo, emoções e inconsciente</li>
+              <li>Está em crise de saúde mental grave e precisa de suporte clínico primeiro</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         MÉTODO
+    ============================================================ -->
+    <section class="section" id="metodo" aria-labelledby="metodo-heading">
+      <div class="wrap two-col two-col--reverse">
+        <div class="two-col-text">
+          <p class="eyebrow">Uma jornada personalizada</p>
+          <h2 id="metodo-heading">Nenhuma pessoa é igual à outra — e o processo também não deveria ser</h2>
+          <p>
+            Não seguimos um protocolo fechado. Cada sessão é desenhada a partir de onde
+            você está: suas questões, seus desafios, seu momento.
+          </p>
+          <p>
+            Ao longo das 12 semanas, combino coaching, EFT, hipnose, Reiki, PNL, T.I.M.E.
+            Techniques e respiração — sempre a ferramenta certa para o momento certo.
+          </p>
+          <p>
+            O objetivo é simples: parar de buscar respostas fora e voltar a confiar em
+            você para tomar decisões alinhadas com quem você realmente é.
+          </p>
+          <a class="btn btn-primary" href="#contato">Iniciar minha jornada</a>
+        </div>
+
+        <div class="two-col-media">
+          <!-- ============================================================
+               IMAGEM SOBRE O MÉTODO
+               Troque pelo seu retrato profissional ou foto de atendimento
+               (proporção 3:4, mínimo 750×1000px).
+          ============================================================ -->
+          <figure class="image-frame image-frame--tall">
+            <img src="assets/placeholder-tall.svg" alt="Substitua por uma foto sua conduzindo uma sessão" width="750" height="1000" loading="lazy" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTATO / FORMULÁRIO
+         Formulário estático por padrão (sem backend). Se conectar a um
+         serviço, use HTTPS, valide no servidor também — a validação em
+         JS aqui é só uma camada de UX, nunca a única defesa.
+    ============================================================ -->
+    <section class="section section--parchment" id="contato" aria-labelledby="contato-heading">
+      <div class="wrap contact-wrap">
+        <p class="eyebrow">Dê o primeiro passo</p>
+        <h2 id="contato-heading">Vamos conversar sobre a sua jornada</h2>
+        <p class="section-lede">
+          Deixe seu e-mail para receber os próximos passos e vagas disponíveis do
+          acompanhamento 1:1 de 12 semanas.
+        </p>
+
+        <form class="contact-form" id="contactForm" novalidate autocomplete="on">
+          <div class="form-row">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" autocomplete="name"
+                   maxlength="80" required aria-describedby="nome-erro">
+            <span class="field-error" id="nome-erro" role="alert"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" autocomplete="email"
+                   maxlength="120" required aria-describedby="email-erro">
+            <span class="field-error" id="email-erro" role="alert"></span>
+          </div>
+
+          <div class="form-row">
+            <label for="mensagem">Como posso te ajudar? <span class="optional">(opcional)</span></label>
+            <textarea id="mensagem" name="mensagem" rows="4" maxlength="600"></textarea>
+          </div>
+
+          <!-- Honeypot anti-spam: campo invisível para humanos, visível para bots.
+               Mantido fora da tab order e escondido via CSS (não display:none,
+               que alguns leitores de tela ignoram de forma inconsistente). -->
+          <div class="form-row form-row--honeypot" aria-hidden="true">
+            <label for="website">Não preencha este campo</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Quero começar</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       RODAPÉ
+  ============================================================ -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <span class="brand-name">Pamela&nbsp;Ferraz</span>
+        <p>Coaching &amp; desenvolvimento pessoal</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Outras páginas">
+        <p class="footer-nav-title">Outras páginas</p>
+        <ul>
+          <li><a href="#" data-placeholder="true">Sobre mim</a></li>
+          <li><a href="#" data-placeholder="true">Programa Individual</a></li>
+          <li><a href="#" data-placeholder="true">Blog / Reflexões</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social-list">
+        <li>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+            Instagram <span class="visually-hidden">(abre em nova aba)</span>
+          </a>
+        </li>
+        <li>
+          <a href="mailto:contato@exemplo.com">E-mail</a>
+        </li>
+        <li>
+          <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer">
+            Spotify <span class="visually-hidden">(abre em nova aba)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <p class="footer-legal">&copy; <span id="anoAtual">2026</span> Pamela Ferraz. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="js/script.js" defer></script>
+</body>
+</html>
