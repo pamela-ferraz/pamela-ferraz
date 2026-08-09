@@ -1,15 +1,3 @@
-/**
- * Pamela Ferraz — landing page
- * JS puro, sem dependências externas.
- *
- * Notas de segurança:
- * - Nunca usamos innerHTML com dados dinâmicos: só textContent.
- * - Nenhum uso de eval/Function/setTimeout com strings.
- * - Nenhum handler inline no HTML (tudo via addEventListener).
- * - Validação de formulário é só UX: se este formulário for ligado a um
- *   backend, valide e sanitize os dados no servidor também.
- * - Honeypot simples contra bots de spam automatizado.
- */
 (() => {
   'use strict';
 
@@ -126,11 +114,11 @@
 
   const validateField = (input) => {
     if (input.hasAttribute('required') && !input.value.trim()) {
-      setFieldError(input, 'Este campo é obrigatório.');
+      setFieldError(input, 'This field is required..');
       return false;
     }
     if (input.type === 'email' && !EMAIL_PATTERN.test(input.value.trim())) {
-      setFieldError(input, 'Digite um e-mail válido.');
+      setFieldError(input, 'Enter a valid email address.');
       return false;
     }
     setFieldError(input, '');
@@ -161,7 +149,7 @@
       const isEmailValid = validateField(email);
 
       if (!isNomeValid || !isEmailValid) {
-        status.textContent = 'Verifique os campos destacados antes de enviar.';
+        status.textContent = 'Check the highlighted fields before submitting.';
         status.classList.remove('is-success');
         return;
       }

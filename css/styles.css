@@ -19,17 +19,17 @@
 
 :root {
   /* cor */
-  --ink-950: #201A1C;
-  --ink-800: #34262B;
-  --ink-700: #4A363D;
-  --parchment: #F1E9DE;
-  --parchment-dim: #E7DCCC;
-  --rose-500: #C98A93;
-  --rose-600: #B36E79;
-  --rose-700: #8C4A56;
-  --gold-400: #C6A15B;
-  --gold-300: #D8BC85;
-  --paper: #FBF8F4;
+  --ink-950: #3a1712;
+  --ink-800: #6b2e22;
+  --ink-700: #7d5146;
+  --parchment: #fff1dd;
+  --parchment-dim: #f5d9b8;
+  --rose-500: #e15b3d;
+  --rose-600: #c9472f;
+  --rose-700: #a83224;
+  --gold-400: #e5a629;
+  --gold-300: #f4c95d;
+  --paper: #fffaf3;
 
   /* tipografia */
   --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
