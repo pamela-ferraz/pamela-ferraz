@@ -1,24 +1,40 @@
-
-(function () {
+(() => {
   "use strict";
 
-  var form = document.querySelector("[data-signup-form]");
-  var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const SELECTORS = {
+    form: "[data-signup-form]",
+    status: "[data-form-status]",
+    year: "[data-current-year]",
+  };
+
+  const form = document.querySelector(SELECTORS.form);
+  const status = document.querySelector(SELECTORS.status);
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  );
 
   function getFieldError(input) {
-    var value = input.value.trim();
+    const value = input.value.trim();
 
-    if (!value) return "This field is required.";
+    if (!value) {
+      return "This field is required.";
+    }
 
-    if (input.name === "first-name") {
-      if (value.length < 2) return "Please enter at least 2 characters.";
-      if (value.length > 80) return "Please use no more than 80 characters.";
+    if (input.name === "first_name") {
+      if (value.length < 2) {
+        return "Please enter at least 2 characters.";
+      }
+
+      if (value.length > 80) {
+        return "Please use no more than 80 characters.";
+      }
+
       if (!/^[\p{L}\p{M}\s.'-]+$/u.test(value)) {
         return "Please enter a valid first name.";
       }
     }
 
-    if (input.name === "email") {
+    if (input.name === "email_address") {
       if (value.length > 254 || !input.validity.valid) {
         return "Please enter a valid email address.";
       }
@@ -28,13 +44,21 @@
   }
 
   function setFieldState(input, error) {
-    var message = document.querySelector('[data-error-for="' + input.id + '"]');
-    input.setAttribute("aria-invalid", error ? "true" : "false");
-    input.classList.toggle("is-invalid", Boolean(error));
-    input.classList.toggle("is-valid", !error && input.value.trim() !== "");
+    const message = document.querySelector(
+      `[data-error-for="${input.id}"]`,
+    );
+    const isValid = !error;
+    const hasValue = input.value.trim() !== "";
 
-    if (message) message.textContent = error;
-    return !error;
+    input.setAttribute("aria-invalid", String(!isValid));
+    input.classList.toggle("is-invalid", !isValid);
+    input.classList.toggle("is-valid", isValid && hasValue);
+
+    if (message) {
+      message.textContent = error;
+    }
+
+    return isValid;
   }
 
   function validateField(input) {
@@ -42,81 +66,100 @@
   }
 
   function clearStatus() {
-    var status = document.querySelector("[data-form-status]");
-    if (!status) return;
+    if (!status) {
+      return;
+    }
+
     status.textContent = "";
     status.className = "form-status";
   }
 
   function setupSmoothScroll() {
-    document.addEventListener("click", function (event) {
-      var link = event.target.closest('a[href^="#"]');
-      if (!link || link.getAttribute("href") === "#") return;
+    document.addEventListener("click", (event) => {
+      const link = event.target.closest('a[href^="#"]');
 
-      var target = document.querySelector(link.getAttribute("href"));
-      if (!target) return;
+      if (!link || link.getAttribute("href") === "#") {
+        return;
+      }
+
+      const targetId = link.getAttribute("href");
+      const target = document.querySelector(targetId);
+
+      if (!target) {
+        return;
+      }
 
       event.preventDefault();
-      target.scrollIntoView({ behavior: prefersReducedMotion.matches ? "auto" : "smooth", block: "start" });
+      target.scrollIntoView({
+        behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+        block: "start",
+      });
 
-      if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+      if (!target.hasAttribute("tabindex")) {
+        target.setAttribute("tabindex", "-1");
+      }
+
       target.focus({ preventScroll: true });
-      window.history.replaceState(null, "", link.getAttribute("href"));
+      window.history.replaceState(null, "", targetId);
     });
   }
 
   function setupForm() {
-    if (!form) return;
+    if (!form) {
+      return;
+    }
 
-    var fields = Array.prototype.slice.call(form.querySelectorAll("input[required]"));
-    var status = document.querySelector("[data-form-status]");
+    const fields = [...form.querySelectorAll("input[required]")];
 
-    fields.forEach(function (input) {
-      input.addEventListener("blur", function () { validateField(input); });
-      input.addEventListener("input", function () {
-        if (input.getAttribute("aria-invalid") === "true") validateField(input);
+    fields.forEach((input) => {
+      input.addEventListener("blur", () => validateField(input));
+
+      input.addEventListener("input", () => {
+        if (input.getAttribute("aria-invalid") === "true") {
+          validateField(input);
+        }
+
         clearStatus();
       });
     });
 
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+    form.addEventListener("submit", (event) => {
       clearStatus();
 
-      /* Ignore automated submissions that fill the hidden honeypot field. */
-      if (form.elements.website && form.elements.website.value) return;
-
-      var isValid = fields.every(validateField);
-      if (!isValid) {
-        var firstInvalid = form.querySelector('[aria-invalid="true"]');
-        if (firstInvalid) firstInvalid.focus();
-        if (status) {
-          status.textContent = "Please correct the highlighted fields and try again.";
-          status.classList.add("form-status--error");
-        }
+      // Honeypot anti-spam protection.
+      if (form.elements.website?.value) {
+        event.preventDefault();
         return;
       }
 
-      /*
-       * No personal data is stored or sent by this page. Connect a HTTPS backend
-       * here to deliver the guide, and repeat validation and anti-spam checks there.
-       */
-      form.reset();
-      fields.forEach(function (input) { setFieldState(input, ""); });
+      const isValid = fields.every(validateField);
+
+      if (isValid) {
+        // Keep the native submission to the Kit endpoint.
+        return;
+      }
+
+      event.preventDefault();
+
+      const firstInvalid = form.querySelector('[aria-invalid="true"]');
+      firstInvalid?.focus();
+
       if (status) {
-        status.textContent = "Success! Your details have been validated.";
-        status.classList.add("form-status--success");
+        status.textContent = "Please correct the highlighted fields and try again.";
+        status.classList.add("form-status--error");
       }
     });
   }
 
   function updateCopyrightYear() {
-    var yearEl = document.querySelector("[data-current-year]");
-    if (!yearEl) return;
-    yearEl.textContent = String(new Date().getFullYear());
+    const year = document.querySelector(SELECTORS.year);
+
+    if (year) {
+      year.textContent = String(new Date().getFullYear());
+    }
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", () => {
     updateCopyrightYear();
     setupSmoothScroll();
     setupForm();
