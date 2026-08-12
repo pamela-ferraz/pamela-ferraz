@@ -128,17 +128,25 @@
   if (form && status) {
     const nome = document.getElementById('nome');
     const email = document.getElementById('email');
-    const honeypot = document.getElementById('website');
+    // IMPORTANTE: o id/name deste campo foi trocado de "website" para
+    // "hp_field_do_not_fill" no HTML. Nomes comuns como "website" são
+    // alvo de autofill/gerenciadores de senha mesmo quando o campo está
+    // escondido, o que preenchia o honeypot sozinho e cancelava envios
+    // reais silenciosamente (o formulário parecia funcionar, mas nada
+    // chegava no Formspree). Se você renomear no HTML de novo, atualize
+    // aqui também.
+    const honeypot = document.getElementById('hp_field_do_not_fill');
 
     [nome, email].forEach((field) => {
       field.addEventListener('blur', () => validateField(field));
     });
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
       // Bot detectado: falha silenciosamente, sem revelar a defesa.
       if (honeypot && honeypot.value.trim() !== '') {
+        event.preventDefault();
         status.textContent = 'Obrigada! Em breve retorno o contato.';
         status.classList.add('is-success');
         form.reset();
@@ -149,17 +157,35 @@
       const isEmailValid = validateField(email);
 
       if (!isNomeValid || !isEmailValid) {
+        event.preventDefault();
         status.textContent = 'Check the highlighted fields before submitting.';
         status.classList.remove('is-success');
         return;
       }
 
-      // Não há backend conectado neste template. Ao integrar um serviço,
-      // envie via fetch() para um endpoint HTTPS próprio e trate a resposta
-      // sem usar innerHTML com o retorno do servidor.
-      status.textContent = 'Obrigada! Recebi seus dados e retorno em breve.';
-      status.classList.add('is-success');
-      form.reset();
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (submitButton) submitButton.disabled = true;
+      status.textContent = 'Sending...';
+      status.classList.remove('is-success');
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+
+        if (!response.ok) throw new Error('Form submission failed.');
+
+        status.textContent = 'Thank you! Your message has been sent.';
+        status.classList.add('is-success');
+        form.reset();
+      } catch (error) {
+        status.textContent = 'Unable to send your message right now. Please try again.';
+        status.classList.remove('is-success');
+      } finally {
+        if (submitButton) submitButton.disabled = false;
+      }
     });
   }
 

@@ -14,7 +14,9 @@
   <meta http-equiv="Content-Security-Policy"
         content="default-src 'self';
                  base-uri 'self';
-                 form-action 'self';
+                 form-action 'self' https://formspree.io;
+                 frame-src https://formspree.io;
+                 connect-src 'self' https://formspree.io;
                  frame-ancestors 'none';
                  object-src 'none';
                  img-src 'self' data:;
@@ -48,6 +50,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="pictures/logo-pamela.jpg" type="image/x-icon">
 
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -182,7 +185,7 @@
           <li><span class="pattern-mark" aria-hidden="true">→</span>You look for approval before making decisions</li>
           <li><span class="pattern-mark" aria-hidden="true">→</span>You are always trying to be who you think you should be</li>
           <li><span class="pattern-mark" aria-hidden="true">→</span>You care too much about what other people might think</li>
-          <li><span class="pattern-mark" aria-hidden="true">→</span>Você passa mais tempo na cabeça do que no corpoYou spend more time in your head than in your body</li>
+          <li><span class="pattern-mark" aria-hidden="true">→</span>You spend more time in your head than in your body</li>
           <li><span class="pattern-mark" aria-hidden="true">→</span>You feel disconnected from your joy, spontaneity, and sense of purpose</li>
           <li><span class="pattern-mark" aria-hidden="true">→</span>You're tired of living according to other people's standards, expectations, and rules</li>
         </ul>
@@ -222,7 +225,7 @@
         </div>
 
         <div class="two-col-list">
-          <h3 class="list-heading">AThrough our 12-week 1:1 journey, I will help you to:</h3>
+          <h3 class="list-heading">Through our 12-week 1:1 journey, I will help you to:</h3>
           <ul class="check-list">
             <li>Recognize where you have been abandoning yourself</li>
             <li>Identify the external voices that are driving your decisions</li>
@@ -245,7 +248,7 @@
     <section class="section section--parchment" id="depoimentos" aria-labelledby="depoimentos-heading">
       <div class="wrap">
         <p class="eyebrow">Words from my clients</p>
-        <h2 id="depoimentos-heading">Depoiments</h2>
+        <h2 id="depoimentos-heading">Testimonials</h2>
 
         <div class="testimonial-grid">
           <!-- ============================================================
@@ -254,7 +257,7 @@
                mínimo 600×600px) e ajuste o alt com o nome/resumo real.
           ============================================================ -->
           <figure class="image-frame image-frame--square">
-            <img src="pictures/Depoimento2.jpg"Espaço para depoimento em imagem 2" width="600" height="600" loading="lazy" decoding="async">
+            <img src="pictures/Depoimento2.jpg" alt="Espaço para depoimento em imagem 2" width="600" height="600" loading="lazy" decoding="async">
           </figure>
           <figure class="image-frame image-frame--square">
             <img src="pictures/Depoimento3.jpg" alt="Espaço para depoimento em imagem 3" width="600" height="600" loading="lazy" decoding="async">
@@ -346,10 +349,11 @@
         <p class="eyebrow">Take the first step</p>
         <h2 id="contato-heading">Let's talk about your journey.</h2>
         <p class="section-lede">
-          DLeave your email to receive the next steps and available spots for the 12-week 1:1 coaching program.
+          Leave your email to receive the next steps and available spots for the 12-week 1:1 coaching program.
         </p>
 
-        <form class="contact-form" id="contactForm" novalidate autocomplete="on">
+        <form action="https://formspree.io/f/mzeprqyz"
+          method="POST" class="contact-form" id="contactForm" novalidate autocomplete="on">
           <div class="form-row">
             <label for="nome">First name</label>
             <input type="text" id="nome" name="nome" autocomplete="name"
@@ -371,11 +375,24 @@
 
           <!-- Honeypot anti-spam: campo invisível para humanos, visível para bots.
                Mantido fora da tab order e escondido via CSS (não display:none,
-               que alguns leitores de tela ignoram de forma inconsistente). -->
+               que alguns leitores de tela ignoram de forma inconsistente).
+
+               IMPORTANTE: o nome do campo NÃO deve ser algo comum como
+               "website", "url" ou "empresa" — gerenciadores de senha e
+               autofill do navegador tentam preencher esses nomes mesmo
+               quando o campo está escondido via CSS, o que faz o JS
+               achar (erroneamente) que é um bot e bloquear o envio real.
+               "hp_field_do_not_fill" não corresponde a nenhum padrão de
+               autofill conhecido. -->
           <div class="form-row form-row--honeypot" aria-hidden="true">
-            <label for="website">Não preencha este campo</label>
-            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            <label for="hp_field_do_not_fill">Não preencha este campo</label>
+            <input type="text" id="hp_field_do_not_fill" name="hp_field_do_not_fill" tabindex="-1" autocomplete="off">
           </div>
+
+          <!-- Honeypot nativo do Formspree: se este campo "_gotcha" vier
+               preenchido, o próprio Formspree descarta o envio como spam
+               (funciona mesmo sem JS, como camada extra de segurança). -->
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
 
           <button type="submit" class="btn btn-primary">I want to start</button>
           <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>

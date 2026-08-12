@@ -38,7 +38,7 @@
     var status = document.getElementById(statusId);
     var honeypot = form.querySelector('input[name="website"]');
 
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", async function (event) {
       event.preventDefault();
 
       // Silently drop obvious bot submissions without revealing the trap.
@@ -76,15 +76,27 @@
         return;
       }
 
-      // No backend is wired to this static page. We confirm locally
-      // and never write the entered values anywhere client-visible.
-      form.reset();
-      fields.forEach(function (field) {
-        var input = document.getElementById(field.id);
-        var errorEl = document.getElementById(field.errorId);
-        if (input && errorEl) setError(input, errorEl, "");
-      });
-      showStatus(status, "success", "You're on the list! We'll reach out with early access details soon.");
+      try {
+        var response = await fetch(form.action, {
+          method: form.method,
+          body: new FormData(form),
+          headers: { Accept: "application/json" }
+        });
+
+        if (!response.ok) throw new Error("Form submission failed.");
+
+        form.reset();
+        fields.forEach(function (field) {
+          var input = document.getElementById(field.id);
+          var errorEl = document.getElementById(field.errorId);
+          if (input && errorEl) setError(input, errorEl, "");
+        });
+        showStatus(status, "success", "You're on the list! We'll reach out with early access details soon.");
+      } catch (error) {
+        // Fallback for browsers or extensions that block cross-origin fetch.
+        // The regular form POST still sends the same data to Formspree.
+        form.submit();
+      }
     });
 
     // Clear inline errors as the visitor corrects a field.
@@ -107,6 +119,7 @@
   }
 
   bindForm("hero-form", "hero-form-status", [
+    { id: "hero-first-name", errorId: "hero-first-name-error", required: true, minLength: 2, requiredMessage: "Enter your first name." },
     { id: "hero-email", errorId: "hero-email-error", type: "email", required: true, requiredMessage: "Enter your email to join the waitlist." }
   ]);
 
