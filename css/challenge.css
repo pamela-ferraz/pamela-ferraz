@@ -272,6 +272,15 @@ button { font: inherit; }
 .noise__copy p { margin-top: 1.1rem; font-size: var(--step-body); }
 .noise__copy p:first-child { margin-top: 0; }
 .noise__copy strong { color: var(--ink-950); font-weight: 600; }
+.noise__prose { margin-top: 1.25rem; }
+.noise__thoughts h3 {
+  margin: 0 0 1rem;
+  color: var(--ink-950);
+  font-family: var(--font-display);
+  font-size: var(--step-h3);
+  font-weight: 500;
+  line-height: 1.3;
+}
 
 .chip-grid {
   list-style: none;
@@ -289,14 +298,11 @@ button { font: inherit; }
   box-shadow: 0 1px 0 var(--parchment-dim);
 }
 .chip::before {
-  content: "\201C";
+  content: none;
+}
+.chip q {
   color: var(--gold-400);
-  font-family: var(--font-display);
-  font-size: 1.4em;
-  line-height: 0;
-  display: inline-block;
-  transform: translateY(0.15em);
-  margin-right: 0.15em;
+  quotes: "“" "”";
 }
 
 /* ============================================
@@ -316,6 +322,18 @@ button { font: inherit; }
   line-height: 1.2;
 }
 .invitation p { margin-top: 1.1rem; font-size: var(--step-lead); }
+.invitation__question {
+  margin: 1.5rem auto;
+  padding: 0.9rem 1.25rem;
+  border-block: 1px solid var(--parchment-dim);
+  color: var(--rose-700);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.15rem);
+  font-style: italic;
+  line-height: 1.2;
+}
+.invitation__question p { margin: 0; font-size: inherit; }
+.invitation__closing { color: var(--ink-950); font-weight: 500; }
 .invitation__spark {
   display: block;
   margin: 1.6rem auto 0;
