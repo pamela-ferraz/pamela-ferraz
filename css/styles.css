@@ -73,7 +73,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-img { max-width: 100%; display: block; }
+img { max-width: 100%; display: block; object-fit: cover;}
 ul { list-style: none; margin: 0; padding: 0; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
@@ -285,7 +285,8 @@ p { margin: 0 0 1em; }
   position: relative;
 }
 .image-frame img { width: 100%; height: 100%; object-fit: cover; }
-.image-frame--portrait { aspect-ratio: 4 / 5; }
+.hero-media .image-frame--portrait { aspect-ratio: 700 / 1244; }
+.hero-media .image-frame--portrait img { object-fit: contain; }
 .image-frame--square { aspect-ratio: 1 / 1; border-radius: var(--radius-md); }
 .image-frame--tall { aspect-ratio: 3 / 4; }
 
@@ -338,11 +339,203 @@ p { margin: 0 0 1em; }
   background: radial-gradient(circle, var(--rose-500) 0 30%, transparent 32%);
 }
 
+/* ==================================================================
+   AJUSTE VISUAL — SEÇÃO "A JORNADA" (#jornada)
+
+   Tudo aqui é prefixado com o seletor #jornada, então só afeta essa
+   seção específica. As classes .two-col / .two-col-text / .check-list
+   continuam com o comportamento padrão nas outras seções que as
+   reaproveitam (ex.: #metodo), porque #jornada + classe tem mais
+   especificidade e vence só dentro desse escopo.
+
+   Ideia: a coluna de texto vira um "manifesto" com fio lateral e duas
+   frases centrais em destaque tipográfico; a coluna da lista vira um
+   cartão convite (fundo escuro, borda dourada) com os itens numerados.
+   ================================================================== */
+
+#jornada {
+  position: relative;
+  background: var(--paper);
+}
+
+@media (min-width: 64rem) {
+  #jornada {
+    background: linear-gradient(
+      120deg,
+      var(--paper) 0%,
+      var(--paper) 52%,
+      var(--parchment) 52%,
+      var(--parchment) 100%
+    );
+  }
+}
+
+/* Coluna de texto: fio vertical + frases-chave em pull-quote */
+#jornada .two-col-text {
+  position: relative;
+  padding-left: 1.4rem;
+  border-left: 2px solid rgba(168, 50, 36, 0.18);
+}
+
+#jornada .two-col-text h2 {
+  font-size: clamp(1.9rem, 1.5rem + 1.8vw, 2.7rem);
+  font-style: italic;
+  color: var(--ink-950);
+  margin-bottom: 1.15rem;
+}
+
+#jornada .two-col-text p {
+  color: var(--ink-700);
+  font-size: 1.04rem;
+}
+
+#jornada .two-col-text p:nth-of-type(3),
+#jornada .two-col-text p:nth-of-type(4) {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.32rem;
+  line-height: 1.4;
+  color: var(--rose-700);
+  margin-bottom: 0.35rem;
+}
+
+#jornada .two-col-text p:nth-of-type(4) {
+  color: var(--ink-950);
+  margin-bottom: 1.65rem;
+}
+
+/* Coluna da lista: vira um cartão convite escuro com dourado */
+#jornada .two-col-list {
+  position: relative;
+  background: linear-gradient(165deg, var(--ink-950) 0%, var(--ink-800) 100%);
+  color: var(--parchment);
+  padding: 2.5rem 2rem 2.75rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(198, 161, 91, 0.3);
+  box-shadow: 0 34px 60px -30px rgba(32, 26, 28, 0.55);
+  overflow: hidden;
+}
+
+#jornada .two-col-list::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--gold-400), var(--rose-500));
+}
+
+#jornada .list-heading {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.32rem;
+  color: var(--parchment);
+  position: relative;
+  padding-bottom: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+#jornada .list-heading::after {
+  content: "";
+  position: absolute; left: 0; bottom: 0;
+  width: 2.75rem; height: 2px;
+  background: var(--gold-400);
+}
+
+#jornada .check-list {
+  counter-reset: jornada-step;
+  gap: 1.15rem;
+}
+
+#jornada .check-list li {
+  counter-increment: jornada-step;
+  padding-left: 2.9rem;
+  color: var(--parchment);
+  font-size: 0.98rem;
+  transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+#jornada .check-list li:hover {
+  transform: translateX(5px);
+  color: var(--gold-300);
+}
+
+#jornada .check-list li::before {
+  content: counter(jornada-step, decimal-leading-zero);
+  background-image: none;
+  position: absolute; left: 0; top: -0.15em;
+  width: 2rem; height: 2rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-400);
+  background-color: rgba(198, 161, 91, 0.14);
+  color: var(--gold-300);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+@media (max-width: 63.9375rem) {
+  #jornada .two-col-text { border-left: none; padding-left: 0; }
+  #jornada .two-col-list { padding: 2.15rem 1.5rem 2.4rem; }
+}
+
 /* Depoimentos */
 .testimonial-grid {
-  display: grid; gap: 1.25rem;
+  display: grid;
+  gap: 1.25rem;
   margin-block: 2.25rem 2.5rem;
 }
+
+.testimonial-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+  padding: 2rem;
+  overflow: hidden;
+  border: 1px solid rgba(32, 26, 28, 0.1);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: 0 20px 45px -35px rgba(32, 26, 28, 0.5);
+}
+
+.testimonial-card::before {
+  content: "“";
+  position: absolute;
+  top: -0.35rem;
+  right: 1rem;
+  color: rgba(168, 50, 36, 0.13);
+  font-family: var(--font-display);
+  font-size: 7rem;
+  line-height: 1;
+}
+
+.testimonial-card blockquote {
+  position: relative;
+  margin: 0;
+}
+
+.testimonial-card blockquote p {
+  color: var(--ink-700);
+  font-size: var(--fs-400);
+  line-height: 1.7;
+}
+
+.testimonial-card__author {
+  position: relative;
+  margin: 1.5rem 0 0;
+  color: var(--rose-700);
+  font-family: var(--font-display);
+  font-size: var(--fs-500);
+  font-style: italic;
+}
+
+.testimonial-card__author::before {
+  content: "— ";
+  color: var(--gold-400);
+}
+
 @media (min-width: 40rem) {
   .testimonial-grid { grid-template-columns: repeat(3, 1fr); }
 }

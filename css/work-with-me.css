@@ -544,7 +544,7 @@ body.nav-locked {
   margin-top: 2.25rem;
 }
 
-/* --- Hero portrait: a spot reserved for the real photo ------------------ */
+/* --- Hero portrait -------------------------------------------------------- */
 
 .hero__portrait {
   position: relative;
@@ -591,8 +591,9 @@ body.nav-locked {
   z-index: 1;
   width: 100%;
   height: 100%;
+  /* O recorte superior mantém o rosto centralizado no formato circular. */
   object-fit: cover;
-  object-position: center top;
+  object-position: center 22%;
   border-radius: 50%;
   border: 6px solid var(--paper);
   outline: 1px solid var(--color-border);
