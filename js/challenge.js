@@ -90,10 +90,25 @@
       }
 
       event.preventDefault();
-      target.scrollIntoView({
-        behavior: prefersReducedMotion.matches ? "auto" : "smooth",
-        block: "start",
-      });
+
+      // FIX: "#start" aponta pro <header> que é position: sticky.
+      // Elementos sticky ficam grudados em top:0 na viewport, então
+      // target.scrollIntoView() calcula que o header "já está
+      // visível" ali em cima (mesmo com a página rolada bem pra
+      // baixo) e o scroll sai mínimo. Pra esse alvo específico,
+      // vamos direto para o topo real da página em vez de usar
+      // scrollIntoView.
+      if (targetId === "#start") {
+        window.scrollTo({
+          top: 0,
+          behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+        });
+      } else {
+        target.scrollIntoView({
+          behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+          block: "start",
+        });
+      }
 
       if (!target.hasAttribute("tabindex")) {
         target.setAttribute("tabindex", "-1");

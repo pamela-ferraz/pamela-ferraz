@@ -16,6 +16,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="shortcut icon" href="../pictures/logo-pamela.jpg" type="image/x-icon">
 
+  <link rel="stylesheet" href="../css/styles.css">
   <link rel="stylesheet" href="../css/work-with-me.css">
 </head>
 <body>
@@ -30,18 +31,37 @@
         <span class="wordmark__tag">Truth &amp; Alignment Coach</span>
       </a>
 
-      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
-        <span class="nav-toggle__bar"></span>
+      <button type="button"
+              class="nav-toggle"
+              id="navToggle"
+              aria-expanded="false"
+              aria-controls="siteNav"
+              aria-label="Abrir menu de navegação">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
       </button>
 
-      <nav class="primary-nav" id="primaryNav" aria-label="Primary">
-        <ul>
-          <li><a href="#packages">Work with me</a></li>
-          <li><a href="#discovery">Discovery call</a></li>
+      <nav class="site-nav" id="siteNav" aria-label="Navegação principal">
+        <ul class="nav-list">
+          <li><a href="#main">Start</a></li>
+          <li><a href="https://pamela-ferraz.kit.com/d5db167d52?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAdGRleATvSZNwZG9mAmZkaWQWUMp-wMw__s_Mju_v-6g7yX24GkO4_GV4dG4DYWVtAjExAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp6J1GmkCVqX03HckSBVowOB0UXd6j3kPWCcERLBsUhbu6JNVd8Nyw6Dy7Frh_aem_rxGIMK1QeJE4WTNnQs6efg" data-placeholder="true">I Remember Program</a></li>
           <li><a href="#contact">Contact</a></li>
+
+          <!-- Placeholders para as demais landing pages do site.
+               Substitua os href="#" pelas URLs reais. -->
+          <li class="nav-item-more">
+            <details class="nav-more">
+              <summary>Other pages</summary>
+              <ul>
+                <li><a href="../pages/work-with-me.html" data-placeholder="true">1:1 Coaching Packages</a></li>
+                <li><a href="../pages/7-days-challenge.html" data-placeholder="true">7 Day Free Reconection Challenge E-Book</a></li>
+                <li><a href="../index.html">Home</a></li>
+              </ul>
+            </details>
+          </li>
         </ul>
+        <a class="btn btn-primary nav-cta" href="../pages/work-with-me.html">Work with me</a>
       </nav>
       <div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
     </div>
@@ -241,5 +261,6 @@
   </footer>
 
   <script src="../js/work-with-me.js" defer></script>
+  <script src="../js/script.js"></script>
 </body>
 </html>

@@ -256,7 +256,10 @@ p { margin: 0 0 1em; }
 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem; }
 
-.hero-media { position: relative; justify-self: center; width: min(22rem, 100%); }
+/* Imagem da produtora: reduzida a pedido — antes ficava min(22rem,100%)
+   no mobile e virava 100% da coluna no desktop (bem grande). Agora tem
+   um teto menor nas duas faixas. */
+.hero-media { position: relative; justify-self: center; width: min(16rem, 100%); }
 .hero-media-tag {
   position: absolute; bottom: -0.9rem; left: 50%; transform: translateX(-50%);
   background: var(--ink-950); color: var(--parchment);
@@ -267,7 +270,7 @@ p { margin: 0 0 1em; }
 
 @media (min-width: 64rem) {
   .hero-grid { grid-template-columns: 1.1fr 0.9fr; align-items: center; padding-block: 5rem 6rem; }
-  .hero-media { justify-self: end; width: 100%; }
+  .hero-media { justify-self: end; width: min(20rem, 100%); }
 }
 
 /* Divisor "rachadura" — elemento de assinatura da página */

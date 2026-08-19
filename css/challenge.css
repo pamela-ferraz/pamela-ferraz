@@ -57,7 +57,7 @@ html { scroll-behavior: smooth; }
 }
 html, body {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 body {
   margin: 0;
@@ -138,6 +138,7 @@ button { font: inherit; }
   background-size: 22px 22px;
   background-position: center;
 }
+
 .divider--on-parchment { background-image: radial-gradient(circle, var(--parchment) 46%, transparent 47%); }
 
 /* ============================================
@@ -178,9 +179,26 @@ button { font: inherit; }
 /* ============================================
    SITE HEADER
 ============================================ */
+/* position: sticky + z-index NÃO criam containing block pra
+   descendentes position:fixed (o painel .site-nav do menu mobile
+   é fixed), então são seguros aqui. O que quebraria o menu seria
+   colocar transform/filter/backdrop-filter direto neste elemento
+   (ele é ancestral do #container-button, que é ancestral do
+   .site-nav) — por isso o blur vai no ::before abaixo, não aqui. */
 .site-header {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   padding-top: clamp(1.25rem, 1rem + 1vw, 2.25rem);
+}
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 250, 243, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: -1;
 }
 .brand {
   display: flex;
@@ -613,6 +631,11 @@ button { font: inherit; }
 }
 .site-footer p + p { margin-top: 0.4rem; }
 .site-footer a { color: var(--gold-300); text-decoration: underline; text-underline-offset: 3px; }
+
+#container-button{
+  display: flex;
+  justify-content: end;
+}
 
 /* ============================================
    RESPONSIVE — mobile medium
